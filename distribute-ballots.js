@@ -1,6 +1,7 @@
 #!/usr/bin/env -S deno run --allow-read --allow-net 
 import { airtable } from "./lib/Airtable.js";
 import { sendBallot } from "./lib/sendBallot.js";
+import { retrieveCandidates } from "./lib/candidates.js";
 import { config } from "https://deno.land/x/dotenv/mod.ts";
 
 // First, we retrieve the eligible voters from the Voters
@@ -14,7 +15,7 @@ const notAbstain = (c) => c.name !== "Abstain";
 
 // Then, we retrieve the Candidates, extract their Name and Statement
 // and remove the candidates who are named "Abstain"
-const candidates = await retrieveCandidates()
+const candidates = (await retrieveCandidates())
   .filter(notAbstain);
 
 // Then we gather the election information from the environment
